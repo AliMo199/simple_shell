@@ -1,74 +1,74 @@
 #include "shell.h"
 
 /**
- * interactive - return true if shell is in interactive
- * @info: struct addresses
+ *interactive - checks if shell is in interactive mode
+ *@data: struct pointer
  *
- * Return: 1 if interactive mode, 0 otherwise
+ *Return: 1 if interactive mode, 0 otherwise
  */
-int interactive(info_t *info)
+int interactive(info_t *data)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && data->readfd <= 2);
 }
 
 /**
- * is_delim - check if character is delimeter
- * @c: char to check
- * @delim: delimeter string
- * Return: 1 if true, 0 if false
+ *is_delim - verifies if character is a delimeter
+ *@ch: the char to verify
+ *@delim: the delimeter string
+ *Return: 1 if true, 0 if false
  */
-int is_delim(char c, char *delim)
+int is_delim(char ch, char *delim)
 {
 	while (*delim)
-		if (*delim++ == c)
+		if (*delim++ == ch)
 			return (1);
 	return (0);
 }
 
 /**
- *_isalpha - check for alphabetic character
- *@c: character to input
- *Return: 1 if c is alphabetic, 0 otherwise
+ *_isalpha - determines if character is alphabetic
+ *@ch: The character to input
+ *Return: 1 if ch is alphabetic, 0 otherwise
  */
 
-int _isalpha(int c)
+int _isalpha(int ch)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
 		return (1);
 	else
 		return (0);
 }
 
 /**
- *_atoi - convert string to integer
- *@s: string to be converted
- *Return: 0 if no numbers in string, converted number otherwise
+ *_atoi - transforms a string to an integer
+ *@str: the string to be transformed
+ *Return: 0 if no numbers in string, transformed number otherwise
  */
 
-int _atoi(char *s)
+int _atoi(char *str)
 {
-	int i, sign = 1, f = 0, out;
-	unsigned int result = 0;
+	int i, sign = 1, state = 0, output;
+	unsigned int num = 0;
 
-	for (i = 0;  s[i] != '\0' && f != 2; i++)
+	for (i = 0; str[i] != '\0' && state != 2; i++)
 	{
-		if (s[i] == '-')
+		if (str[i] == '-')
 			sign *= -1;
 
-		if (s[i] >= '0' && s[i] <= '9')
+		if (str[i] >= '0' && str[i] <= '9')
 		{
-			f = 1;
-			result *= 10;
-			result += (s[i] - '0');
+			state = 1;
+			num *= 10;
+			num += (str[i] - '0');
 		}
-		else if (f == 1)
-			f = 2;
+		else if (state == 1)
+			state = 2;
 	}
 
 	if (sign == -1)
-		out = -result;
+		output = -num;
 	else
-		out = result;
+		output = num;
 
-	return (out);
+	return (output);
 }

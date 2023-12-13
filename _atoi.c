@@ -1,23 +1,23 @@
 #include "shell.h"
 
 /**
- *is_interactive - checks if the shell is in interactive mode
- *@info: pointer to the shell information structure
+ *interactive - checks if shell is in interactive mode
+ *@data: struct pointer
  *
  *Return: 1 if interactive mode, 0 otherwise
  */
-int is_interactive(info_t *info)
+int interactive(info_t *data)
 {
-	return (isatty(STDIN_FILENO) && info->readfd <= 2);
+	return (isatty(STDIN_FILENO) && data->readfd <= 2);
 }
 
 /**
- *is_delimiter - checks if a character is a delimiter
- *@ch: the character to check
- *@delim: the delimiter string
+ *is_delim - verifies if character is a delimeter
+ *@ch: the char to verify
+ *@delim: the delimeter string
  *Return: 1 if true, 0 if false
  */
-int is_delimiter(char ch, char *delim)
+int is_delim(char ch, char *delim)
 {
 	while (*delim)
 		if (*delim++ == ch)
@@ -26,12 +26,12 @@ int is_delimiter(char ch, char *delim)
 }
 
 /**
- *is_alpha - checks for alphabetic character
- *@ch: the character to check
+ *_isalpha - determines if character is alphabetic
+ *@ch: The character to input
  *Return: 1 if ch is alphabetic, 0 otherwise
  */
 
-int is_alpha(int ch)
+int _isalpha(int ch)
 {
 	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
 		return (1);
@@ -40,15 +40,15 @@ int is_alpha(int ch)
 }
 
 /**
- *str_to_int - converts a string to an integer
- *@str: the string to be converted
- *Return: 0 if no numbers in string, converted number otherwise
+ *_atoi - transforms a string to an integer
+ *@str: the string to be transformed
+ *Return: 0 if no numbers in string, transformed number otherwise
  */
 
-int str_to_int(char *str)
+int _atoi(char *str)
 {
-	int i, sign = 1, state = 0, num;
-	unsigned int value = 0;
+	int i, sign = 1, state = 0, output;
+	unsigned int num = 0;
 
 	for (i = 0; str[i] != '\0' && state != 2; i++)
 	{
@@ -58,17 +58,17 @@ int str_to_int(char *str)
 		if (str[i] >= '0' && str[i] <= '9')
 		{
 			state = 1;
-			value *= 10;
-			value += (str[i] - '0');
+			num *= 10;
+			num += (str[i] - '0');
 		}
 		else if (state == 1)
 			state = 2;
 	}
 
 	if (sign == -1)
-		num = -value;
+		output = -num;
 	else
-		num = value;
+		output = num;
 
-	return (num);
+	return (output);
 }

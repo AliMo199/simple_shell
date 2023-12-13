@@ -2,15 +2,15 @@
 
 /**
  **_strncpy - copies a string
- *@dest: the target string to be copied to
+ *@dest: the destination string to be copied to
  *@src: the source string
- *@n: the number of characters to be copied
- *Return: the copied string
+ *@n: the amount of characters to be copied
+ *Return: the concatenated string
  */
 char *_strncpy(char *dest, char *src, int n)
 {
 	int i, j;
-	char *t = dest;
+	char *s = dest;
 
 	i = 0;
 	while (src[i] != '\0' && i < n - 1)
@@ -18,7 +18,6 @@ char *_strncpy(char *dest, char *src, int n)
 		dest[i] = src[i];
 		i++;
 	}
-
 	if (i < n)
 	{
 		j = i;
@@ -28,21 +27,20 @@ char *_strncpy(char *dest, char *src, int n)
 			j++;
 		}
 	}
-
-	return (t);
+	return (s);
 }
 
 /**
- **_strncat - joins two strings
+ **_strncat - concatenates two strings
  *@dest: the first string
  *@src: the second string
- *@n: the maximum amount of bytes to be used
- *Return: the joined string
+ *@n: the amount of bytes to be maximally used
+ *Return: the concatenated string
  */
 char *_strncat(char *dest, char *src, int n)
 {
 	int i, j;
-	char *t = dest;
+	char *s = dest;
 
 	i = 0;
 	j = 0;
@@ -54,15 +52,14 @@ char *_strncat(char *dest, char *src, int n)
 		i++;
 		j++;
 	}
-
 	if (j < n)
 		dest[i] = '\0';
-	return (t);
+	return (s);
 }
 
 /**
- **_strchr - finds a character in a string
- *@s: the string to be searched
+ **_strchr - locates a character in a string
+ *@s: the string to be parsed
  *@c: the character to look for
  *Return: (s) a pointer to the memory area s
  */
